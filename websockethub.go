@@ -66,6 +66,7 @@ func wsHandleFunc(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("gui serve ws:", err)
 		}
-		fmt.Println(message)
+		fmt.Println(string(message))
+		nextFrame()
 	}
 }

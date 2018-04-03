@@ -7,10 +7,23 @@ function setup() {
 
   }
   
+  var data = {
+    Ellipses: []
+  };
+
   function draw() {
-    ellipse(10,10,50,50);
+    clear()
+    data.Ellipses.forEach(function(obj){
+      console.log(obj);
+      ellipse(obj.x,obj.y,obj.w,obj.h);
+    });
+
+    socket.send("ready");
   }
  
 socket.onmessage = function(event){
-    console.log(event.data);
+    newData = JSON.parse(event.data);
+    data = newData.shapes
+    console.log(data)
+    draw();
 }
