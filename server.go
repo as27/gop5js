@@ -31,7 +31,7 @@ func NewRouter() *mux.Router {
 	r.HandleFunc(PathPrefix+"/ws", wsHandleFunc)
 	box := packr.NewBox("./templates")
 	r.HandleFunc(PathPrefix+"/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write(box.Bytes("index.html"))
+		w.Write([]byte(templateIndex))
 	})
 	r.HandleFunc(PathPrefix+"/sketch.js", func(w http.ResponseWriter, r *http.Request) {
 		w.Write(box.Bytes("sketch.js"))
