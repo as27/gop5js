@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/websocket"
 )
@@ -64,7 +65,9 @@ func wsHandleFunc(w http.ResponseWriter, r *http.Request) {
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
-			fmt.Println("gui serve ws:", err)
+			fmt.Println("error when reading from browser:", err)
+			fmt.Println("Program exit.")
+			os.Exit(1)
 		}
 		fmt.Println(string(message))
 		nextFrame()
