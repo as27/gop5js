@@ -69,7 +69,7 @@ func wsHandleFunc(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Program exit.")
 			os.Exit(1)
 		}
-		fmt.Println(string(message))
-		nextFrame()
+		//fmt.Println(string(message))
+		nextFrame(message)
 	}
 }

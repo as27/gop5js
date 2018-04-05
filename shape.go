@@ -9,14 +9,14 @@ import (
 // x, y, w, h, start, and stop, the arc will be drawn and filled as
 // an open pie segment. If a mode parameter is provided, the arc will
 // be filled like an open semi-circle (OPEN) , a closed semi-circle (CHORD),
-//  or as a closed pie segment (PIE).
+// or as a closed pie segment (PIE).
 func Arc(x, y, w, h, start, stop float64, mode string) {
 	v := joinFloat64(x, y, w, h, start, stop)
 	if mode != "" {
 		v = fmt.Sprintf("%s,%s", v, mode)
 	}
 	_, err := sketchDraw.WriteString(
-		fmt.Sprintf("Arc(%s);", v),
+		fmt.Sprintf("arc(%s);", v),
 	)
 	ErrorContainer.add(err)
 }
@@ -28,7 +28,7 @@ func Arc(x, y, w, h, start, stop float64, mode string) {
 func Ellipse(x, y, w, h float64) {
 	v := joinFloat64(x, y, w, h)
 	_, err := sketchDraw.WriteString(
-		fmt.Sprintf("Ellipse(%s);", v),
+		fmt.Sprintf("ellipse(%s);", v),
 	)
 	ErrorContainer.add(err)
 }

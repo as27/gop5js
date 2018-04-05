@@ -23,9 +23,9 @@ var PathPrefix = ""
 // ServerPort defines the port for the communication to the client
 var ServerPort = ":2700"
 
-// NewRouter returns a gorillatoolkit router with all routes needed for
+// newRouter returns a gorillatoolkit router with all routes needed for
 // the gop5js package
-func NewRouter() *mux.Router {
+func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc(PathPrefix+"/lib/p5.js", p5js.Handler)
 	r.HandleFunc(PathPrefix+"/ws", wsHandleFunc)
@@ -42,7 +42,7 @@ func NewRouter() *mux.Router {
 
 // Serve starts the server for the communication with the browser
 func Serve() error {
-	r := NewRouter()
+	r := newRouter()
 	log.Println("Serving on port: ", ServerPort)
 	baseURL := fmt.Sprintf("http://localhost%s%s", ServerPort, PathPrefix)
 	log.Println("Open your browser and go to ", baseURL)
