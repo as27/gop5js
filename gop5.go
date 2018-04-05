@@ -20,7 +20,7 @@ var Event P5Event
 
 // SleepPerFrame makes the execution a litle slower, beccause the Go implementation
 // is so extrem fast.
-var SleepPerFrame = time.Millisecond * time.Duration(100)
+var SleepPerFrame = time.Millisecond * time.Duration(50)
 
 // ErrorContainer collects all errors
 var ErrorContainer errorContainer

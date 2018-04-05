@@ -2,7 +2,6 @@ package gop5js
 
 import (
 	"fmt"
-	"strings"
 )
 
 // Arc Draw an arc to the screen. If called with only
@@ -104,10 +103,40 @@ func Triangle(x1, y1, x2, y2, x3, y3 float64) {
 	ErrorContainer.add(err)
 }
 
-func joinFloat64(fs ...float64) string {
-	var ss []string
-	for _, f := range fs {
-		ss = append(ss, fmt.Sprintf("%f", f))
-	}
-	return strings.Join(ss, ",")
+// Bezier draws a cubic Bezier curve on the screen. These curves are defined by a series
+// of anchor and control points. The first two parameters specify the first anchor point
+// and the last two parameters specify the other anchor point, which become the first
+// and last points on the curve. The middle parameters specify the two control points
+// which define the shape of the curve. Approximately speaking, control points "pull" the
+// curve towards them.
+func Bezier(x1, y1, x2, y2, x3, y3, x4, y4 float64) {
+	v := joinFloat64(x1, y1, x2, y2, x3, y3, x4, y4)
+	_, err := sketchDraw.WriteString(
+		fmt.Sprintf("bezier(%s);", v),
+	)
+	ErrorContainer.add(err)
+}
+
+// BezierDetail sets the resolution at which Beziers display.
+// The default value is 20.
+func BezierDetail(detail int) {
+	_, err := sketchDraw.WriteString(
+		fmt.Sprintf("bezierDetail(%d);", detail),
+	)
+	ErrorContainer.add(err)
+}
+
+func Curve(x1, y1, x2, y2, x3, y3, x4, y4 float64) {
+	v := joinFloat64(x1, y1, x2, y2, x3, y3, x4, y4)
+	_, err := sketchDraw.WriteString(
+		fmt.Sprintf("curve(%s);", v),
+	)
+	ErrorContainer.add(err)
+}
+
+func CurveDetail(detail int) {
+	_, err := sketchDraw.WriteString(
+		fmt.Sprintf("curveDetail(%d);", detail),
+	)
+	ErrorContainer.add(err)
 }
