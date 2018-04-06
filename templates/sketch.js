@@ -1,4 +1,4 @@
-var socket = new WebSocket("ws://localhost:2700/ws");
+var socket = new WebSocket("ws://" + ServerName + ServerPort + "/ws");
 
 var p5Data = {
   mouseX: 0,
@@ -6,30 +6,27 @@ var p5Data = {
 };
 
 function setup() {
-   createCanvas(500,500);
-  
-   noLoop();
-
-  }
-  
-  var sketch_draw = "";
-
-  function draw() {
-    clear();
-    background(127);
-    eval(sketch_draw)
-    socket.send(JSON.stringify(getParams()));
-    console.log(mouseX,mouseY);
-  }
- 
-socket.onmessage = function(event){
-    newData = JSON.parse(event.data);
-    sketch_draw = newData.sketch_draw;
-    console.log(sketch_draw)
-    draw();
+  createCanvas(CanvasWidth, CanvasHeight);
+  noLoop();
 }
 
-function getParams(){
+var sketch_draw = "";
+
+function draw() {
+  clear();
+  eval(sketch_draw)
+  socket.send(JSON.stringify(getParams()));
+  console.log(mouseX, mouseY);
+}
+
+socket.onmessage = function (event) {
+  newData = JSON.parse(event.data);
+  sketch_draw = newData.sketch_draw;
+  console.log(sketch_draw)
+  draw();
+}
+
+function getParams() {
   return {
     mouse_x: mouseX,
     mouse_y: mouseY,
@@ -39,7 +36,7 @@ function getParams(){
     win_mouse_y: winMouseY,
     p_win_mouse_x: winMouseX,
     p_win_mouse_y: winMouseY,
-    mouse_button: (mouseButton===0)?"":mouseButton,
+    mouse_button: (mouseButton === 0) ? "" : mouseButton,
     mouse_is_pressed: mouseIsPressed
   }
 }

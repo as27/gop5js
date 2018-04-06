@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"os"
 	"time"
 )
 
@@ -15,6 +14,12 @@ var sketchDraw bytes.Buffer
 
 // Draw is called every frame
 var Draw = func() {}
+
+// CanvasWidth defines the canvas which is generated inside the browser
+var CanvasWidth = 700
+
+// CanvasHeight defines the canvas which is generated inside the browser
+var CanvasHeight = 700
 
 var Event P5Event
 
@@ -65,7 +70,5 @@ func nextFrame(message []byte) {
 	data.SketchDraw = sketchDraw.String()
 	time.Sleep(SleepPerFrame)
 	wshub.writeJSON(data)
-	if data.FrameCount == 500 {
-		os.Exit(0)
-	}
+
 }

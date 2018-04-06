@@ -12,6 +12,7 @@ func main() {
 var x float64 = 0
 
 func draw() {
+	gop5js.Background("127")
 	gop5js.DrawCmd("fill('blue')")
 	gop5js.Ellipse(x, 20, 30, 30)
 	x = x + 1.5

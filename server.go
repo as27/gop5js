@@ -20,7 +20,11 @@ import (
 // For example "/p5js" or "/myprefix"
 var PathPrefix = ""
 
-// ServerPort defines the port for the communication to the client
+// serverName is the name of the webserver. Can be changed also to IP adress
+var serverName = "localhost"
+
+// ServerPort defines the port for the communication to the client. You need
+// to change this value, when the default port is already used on your system.
 var ServerPort = ":2700"
 
 // newRouter returns a gorillatoolkit router with all routes needed for
@@ -29,14 +33,15 @@ func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc(PathPrefix+"/lib/p5.js", p5js.Handler)
 	r.HandleFunc(PathPrefix+"/ws", wsHandleFunc)
+
 	box := packr.NewBox("./templates")
 	r.HandleFunc(PathPrefix+"/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(templateIndex))
 	})
+	r.HandleFunc(PathPrefix+"/globals.js", globalsHandler)
 	r.HandleFunc(PathPrefix+"/sketch.js", func(w http.ResponseWriter, r *http.Request) {
 		w.Write(box.Bytes("sketch.js"))
 	})
-
 	return r
 }
 
@@ -44,7 +49,7 @@ func newRouter() *mux.Router {
 func Serve() error {
 	r := newRouter()
 	log.Println("Serving on port: ", ServerPort)
-	baseURL := fmt.Sprintf("http://localhost%s%s", ServerPort, PathPrefix)
+	baseURL := fmt.Sprintf("http://%s%s%s", serverName, ServerPort, PathPrefix)
 	log.Println("Open your browser and go to ", baseURL)
 	open.Run(baseURL)
 	return http.ListenAndServe(ServerPort, r)
