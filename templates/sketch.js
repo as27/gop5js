@@ -14,7 +14,7 @@ var sketch_draw = "";
 
 function draw() {
   clear();
-  eval(sketch_draw)
+  eval(sketch_draw);
   socket.send(JSON.stringify(getParams()));
   console.log(mouseX, mouseY);
 }

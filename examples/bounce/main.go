@@ -1,6 +1,10 @@
 package main
 
-import "github.com/as27/gop5js"
+import (
+	"fmt"
+
+	"github.com/as27/gop5js"
+)
 
 type Vector struct {
 	x, y float64
@@ -38,26 +42,30 @@ func newMover(x, y float64) Mover {
 func (m Mover) update() {
 	m.velocity.add(m.acceleration)
 	m.location.add(m.velocity)
-	if m.location.x <= 25 || m.location.x >= 675 {
+	if m.location.x < 25 || m.location.x > 675 {
 		m.velocity.x = -m.velocity.x
 	}
-	if m.location.y <= 25 || m.location.y >= 575 {
+	if m.location.y < 25 || m.location.y > 575 {
 		m.velocity.y = -m.velocity.y
 	}
 	gop5js.Ellipse(m.location.x, m.location.y, 50, 50)
+	gop5js.TextSize(10)
+	gop5js.Text(fmt.Sprintf("%05.1f-%05.1f", m.location.x, m.location.y), 20, 550)
 }
 
 var m1 = newMover(float64(30), float64(30))
 
 func init() {
-	wind := &Vector{0.9, 0.01}
+	wind := &Vector{0.2, 0}
 	gravity := &Vector{0, 1}
 	m1.acceleration.add(wind)
 	m1.acceleration.add(gravity)
 }
 
 func draw() {
-	gop5js.Background("77")
+	gop5js.Background("127")
+	gop5js.TextSize(15)
+	gop5js.Text("wind from left to right ->", 50, 50)
 	m1.update()
 }
 
