@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/as27/gop5js"
 )
@@ -53,6 +54,21 @@ func (m Mover) update() {
 	gop5js.Text(fmt.Sprintf("%05.1f-%05.1f", m.location.x, m.location.y), 20, 550)
 }
 
+func (m Mover) checkEdges() {
+	if m.location.x < 25 {
+		m.location.x = 25
+	}
+	if m.location.x > 675 {
+		m.location.x = 675
+	}
+	if m.location.y < 25 {
+		m.location.y = 25
+	}
+	if m.location.y > 575 {
+		m.location.y = 575
+	}
+}
+
 var m1 = newMover(float64(30), float64(30))
 
 func init() {
@@ -66,12 +82,15 @@ func draw() {
 	gop5js.Background("127")
 	gop5js.TextSize(15)
 	gop5js.Text("wind from left to right ->", 50, 50)
+	m1.checkEdges()
 	m1.update()
+
 }
 
 func main() {
 	gop5js.Draw = draw
 	gop5js.CanvasHeight = 600
 	gop5js.CanvasWidth = 700
+	gop5js.SleepPerFrame = time.Millisecond * time.Duration(20)
 	gop5js.Serve()
 }
