@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gobuffalo/packr"
 	"github.com/skratchdot/open-golang/open"
 
 	"github.com/as27/golib/js/p5js"
@@ -34,13 +33,12 @@ func newRouter() *mux.Router {
 	r.HandleFunc(PathPrefix+"/lib/p5.js", p5js.Handler)
 	r.HandleFunc(PathPrefix+"/ws", wsHandleFunc)
 
-	box := packr.NewBox("./templates")
 	r.HandleFunc(PathPrefix+"/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(templateIndex))
 	})
 	r.HandleFunc(PathPrefix+"/globals.js", globalsHandler)
 	r.HandleFunc(PathPrefix+"/sketch.js", func(w http.ResponseWriter, r *http.Request) {
-		w.Write(box.Bytes("sketch.js"))
+		w.Write([]byte(templateSketch))
 	})
 	return r
 }
