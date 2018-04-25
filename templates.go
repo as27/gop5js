@@ -27,6 +27,12 @@ const templateGlobals = `
 var {{ .Name }} = "{{ .Value }}";{{ end }}
 {{ range .IntVars }}
 var {{ .Name }} = {{ .IntValue }};{{ end }}
+var images = [];
+function preload(){
+{{ range $key, $value := .Images}}
+images['{{ $key }}'] = loadImage('/files/{{ $value }}');
+{{ end }}
+}
 `
 
 func globalsHandler(w http.ResponseWriter, r *http.Request) {
@@ -39,6 +45,7 @@ func globalsHandler(w http.ResponseWriter, r *http.Request) {
 			Name     string
 			IntValue int
 		}
+		Images map[string]string
 	}{
 		[]struct{ Name, Value string }{
 			{"ServerName", serverName},
@@ -51,6 +58,7 @@ func globalsHandler(w http.ResponseWriter, r *http.Request) {
 			{"CanvasWidth", CanvasWidth},
 			{"CanvasHeight", CanvasHeight},
 		},
+		images,
 	}
 	t := template.Must(template.New("globals").Parse(templateGlobals))
 	err := t.Execute(w, globalParams)
@@ -65,6 +73,8 @@ var p5Data = {
   mouseX: 0,
   mouseY: 0
 };
+
+var images = {}
 
 function setup() {
   createCanvas(CanvasWidth, CanvasHeight);

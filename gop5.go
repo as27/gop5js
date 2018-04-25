@@ -12,6 +12,9 @@ import (
 // sketchDraw
 var sketchDraw bytes.Buffer
 
+// images needs to be preloaded
+var images = make(map[string]string)
+
 // Draw is called every frame
 var Draw = func() {}
 
@@ -31,8 +34,9 @@ var SleepPerFrame = time.Millisecond * time.Duration(50)
 var ErrorContainer errorContainer
 
 type Data struct {
-	FrameCount int    `json:"frame_count,omitempty"`
-	SketchDraw string `json:"sketch_draw,omitempty"`
+	FrameCount    int    `json:"frame_count,omitempty"`
+	SketchDraw    string `json:"sketch_draw,omitempty"`
+	SketchPreload string `json:"sketch_preload,omitempty"`
 }
 
 type P5Event struct {
