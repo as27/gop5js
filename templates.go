@@ -77,13 +77,11 @@ function draw() {
   clear();
   eval(sketch_draw);
   socket.send(JSON.stringify(getParams()));
-  console.log(mouseX, mouseY);
 }
 
 socket.onmessage = function (event) {
   newData = JSON.parse(event.data);
   sketch_draw = newData.sketch_draw;
-  console.log(sketch_draw)
   draw();
 }
 
