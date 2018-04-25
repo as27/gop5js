@@ -7,7 +7,7 @@ import (
 )
 
 func TestRouter(t *testing.T) {
-	ts := httptest.NewServer(NewRouter())
+	ts := httptest.NewServer(newRouter())
 	defer ts.Close()
 	testUrls := []string{
 		"lib/p5.js",

@@ -26,11 +26,18 @@ var serverName = "localhost"
 // to change this value, when the default port is already used on your system.
 var ServerPort = ":2700"
 
+// FilesPath is the path to a folder, which can contain additional files like
+// for example images.
+var FilesPath = ""
+
 // newRouter returns a gorillatoolkit router with all routes needed for
 // the gop5js package
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc(PathPrefix+"/lib/p5.js", p5js.Handler)
+	if FilesPath != "" {
+		r.PathPrefix("/files/").Handler(http.StripPrefix("/files/", http.FileServer(http.Dir(FilesPath))))
+	}
 	r.HandleFunc(PathPrefix+"/ws", wsHandleFunc)
 
 	r.HandleFunc(PathPrefix+"/", func(w http.ResponseWriter, r *http.Request) {

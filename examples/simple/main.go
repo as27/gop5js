@@ -6,6 +6,7 @@ import (
 
 func main() {
 	gop5js.Draw = draw
+	gop5js.FilesPath = "files/"
 	gop5js.Serve()
 }
 
