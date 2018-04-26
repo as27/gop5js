@@ -27,12 +27,14 @@ const templateGlobals = `
 var {{ .Name }} = "{{ .Value }}";{{ end }}
 {{ range .IntVars }}
 var {{ .Name }} = {{ .IntValue }};{{ end }}
-var images = [];
-function preload(){
-{{ range $key, $value := .Images}}
-images['{{ $key }}'] = loadImage('/files/{{ $value }}');
+{{ with .Images }}
+  var images = [];
+  function preload(){
+    {{ range $key, $value := .}}
+      images['{{ $key }}'] = loadImage('/files/{{ $value }}');
+    {{ end }}
+  }
 {{ end }}
-}
 `
 
 func globalsHandler(w http.ResponseWriter, r *http.Request) {
