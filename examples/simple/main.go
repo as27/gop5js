@@ -7,7 +7,7 @@ import (
 func main() {
 	gop5js.Draw = draw
 	gop5js.FilesPath = "files/"
-	gop5js.LoadImage("star", "star.png")
+
 	gop5js.Serve()
 }
 
@@ -19,13 +19,12 @@ func draw() {
 	gop5js.DrawCmd("fill('blue')")
 	gop5js.Ellipse(x, 20, 30, 30)
 	x = x + 1.5
-	gop5js.Image("star", 50+x*0.5, 50, 150, 150)
+
 	gop5js.Ellipse(200, 200, 30, 200-x*0.01)
 	gop5js.DrawCmd("fill('red')")
 	if gop5js.Event.MouseIsPressed {
 		gop5js.Line(200, 200, 350, 350)
 		gop5js.Rect(150, 150, 210, 210)
-		gop5js.Image("star.png", 50, 50, 150, 150)
 	}
 
 }
