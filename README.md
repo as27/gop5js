@@ -13,22 +13,45 @@ To install just use `go get`
 ## How to use the package
 
 * Create function of the type `func()`
-* Set the gop5js.Draw to the function
+* let gop5js.Draw point to the function
 * Start the gop5js server: `gop5js.Serve()`
 
 ## Example 
+```go
+func main() {
+    gop5js.CanvasHeight = 400
+    gop5js.CanvasWidth = 400
+    gop5js.Draw = draw
+    gop5js.Serve()
+}
 
-    func main() {
-        gop5js.CanvasHeight = 400
-        gop5js.CanvasWidth = 400
-        gop5js.Draw = draw
-        gop5js.Serve()
-    }
+func draw() {
+    gop5js.Background("127")
+    gop5js.Ellipse(20, 20, 30, 30)
+    gop5js.Rect(100, 100, 20, 20)
+    gop5js.Text("some text here", 20, 200)
 
-    func draw() {
-        gop5js.Background("127")
-        gop5js.Ellipse(20, 20, 30, 30)
-        gop5js.Rect(100, 100, 20, 20)
-        gop5js.Text("some text here", 20, 200)
+}
+```
 
-    }
+### How to include images
+
+That p5.js can access 
+```go
+func main() {
+	gop5js.Draw = draw
+	// set the FilesPath variable. That folder can be accessed from p5.js
+	gop5js.FilesPath = "files/"
+	// before you can use the image inside draw() the image needs to be
+	// loaded
+	gop5js.LoadImage("star", "star.png")
+	gop5js.Serve()
+}
+
+func draw() {
+	gop5js.Background("127")
+	x = x + 1.5
+	// access the loaded image
+	gop5js.Image("star", 50, 50, 150, 150)
+}
+```
